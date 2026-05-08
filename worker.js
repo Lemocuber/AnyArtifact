@@ -6,7 +6,7 @@
 
 export default {
   async fetch(request, env, ctx) {
-    const AUTH = { 'Authorization': `Bearer ${env.TOKEN}`, 'User-Agent': 'Cloudflare Worker' };
+    const AUTH = { 'Authorization': `Bearer ${env.TOKEN}`, 'User-Agent': 'AnyArtifact (https://github.com/Lemocuber/AnyArtifact) / Cloudflare Worker' };
     const HTML = { 'Content-Type': 'text/html; charset=utf-8' };
 
     try {
@@ -16,7 +16,10 @@ export default {
       const artifacts = await getArtifacts(`${re}/${po}`, AUTH);
 
       if (item in artifacts) {
-        return fetch(artifacts[item], { headers: AUTH });
+        const res = await fetch(artifacts[item], { headers: AUTH });
+        const headers = new Headers(res.headers);
+        headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+        return new Response(res.body, { status: res.status, headers });
       }
 
       return new Response(
