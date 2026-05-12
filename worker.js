@@ -18,12 +18,12 @@ export default {
       const { title, artifacts } = await getArtifacts(`${re}/${po}`, query, AUTH);
 
       if (item in artifacts) {
-        return await grabDownload(artifacts[item]);
+        return await grabDownload(artifacts[item], AUTH);
       }
 
       return new Response(
         `<html><body><strong>${title}</strong><br/>${Object.keys(artifacts).map(name => (
-          `<a href="${worker}/${re}/${po}/${name}">${name}</a>`
+          `<a href="${worker}/${re}/${po}/${name}${query&&'/?'}${query}">${name}</a>`
         )).join('<br/>')}</body></html>`,
         { status: 200, headers: HTML }
       );
