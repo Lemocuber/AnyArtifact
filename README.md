@@ -12,8 +12,11 @@ Deploy the project, then
 For a index of artifacts
 - https://your-domain/repo-username/repo-name
 
+Plus query strings, e.g. index of latest successful build on specific branch
+- https://your-domain/repo-username/repo-name/?branch=branch-name&status=completed
+
 For a certain artifact
-- https://your-domain/repo-username/repo-name/artiface-name
+- https://your-domain/repo-username/repo-name/artifact-name
 ```
 
 It's easy as that!
